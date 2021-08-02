@@ -34,7 +34,7 @@ namespace Application.Activities
                 var activity = await Context.Activities
                     .Include(a => a.Attendees)
                     .ThenInclude(u => u.AppUser)
-                    .SingleOrDefaultAsync(x => x.Id == request.Id);
+                    .SingleOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
                 // Returns BadRequest
                 if (activity == null) return null;
                 // Get the calling users username, through IUserAccessor.
@@ -67,7 +67,7 @@ namespace Application.Activities
                     activity.Attendees.Add(attendance);
                 }
                 
-                var results = await Context.SaveChangesAsync() > 0;
+                var results = await Context.SaveChangesAsync(cancellationToken) > 0;
                 // Check if inserting was successfull.
                 return results ? Result<Unit>.Success(Unit.Value) : Result<Unit>.Failure("Problem updating attendance");
             }

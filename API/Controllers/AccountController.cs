@@ -94,12 +94,12 @@ namespace API.Controllers
         /// <returns name="UserDto">UserDto object</returns>
         private UserDto CreateUserObject(AppUser user)
         {
-            return new UserDto()
+            return new()
             {
                 DisplayName = user.DisplayName,
                 Image = null,
                 Token = _tokenService.CreateToken(user),
-                UserName = user.UserName
+                Username = user.UserName
             };
         }
     }
